@@ -1,5 +1,6 @@
 
 var express = require('express'),
+	exphbs = require('express3-handlebars'),
 	mongoose = require('mongoose'),
 	uri = 'mongodb://localhost/mongoose-shared-connection';
 
