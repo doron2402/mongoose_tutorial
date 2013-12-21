@@ -4,8 +4,21 @@ var model = require('./modelA'),
 
 exports.home = function (req, res, next) {
   model.find(function (err, docs) {
-    if (err) return next(err);
-    res.send(docs);
+    if (err) 
+    	return next(err);
+    
+    console.log(docs)
+    res.render('home', {
+    	db: docs,
+    	helpers: {
+            list: function (context, options) { 
+        	return "<ul>" + context.map(function(item) {
+    		return "<li>" + options.fn(item) + "</li>";
+  			}).join("\n") + "</ul>"; }
+        }
+    });
+    
+    //res.render(docs);
   })
 }
 
@@ -78,12 +91,25 @@ exports.getId = function(req, res, next) {
 	model.find(function (err, docs) {
 	    if (err) 
 	    	return next(err);
+	    _.find(docs, function(doc){
+	    	if (doc._id == id){
+	    		console.log('_find');
+	    		res.json(doc);
+	    		return doc;
+	    	}
+	    });
 	    
+	    res.json(JSON.stringify({
+	    	error: "Couldn't find :("
+		}));
+
+	    /*
 	    _.each(docs, function(key, val){
-			console.log(key._id);
-			console.log(id)
+			
 		  	if (key._id == id) {
+		    	console.log('Found Id');
 		    	res.json(key);
+		    	return false;
 		  	}
 		  	else 
 		  	{
@@ -92,7 +118,8 @@ exports.getId = function(req, res, next) {
 				}));
 		  	}
 
-		});   	
+		});  
+		*/ 	
 	 });
 
 }

@@ -3,17 +3,20 @@ var express = require('express'),
 	exphbs = require('express3-handlebars'),
 	mongoose = require('mongoose'),
 	uri = 'mongodb://localhost/mongoose-shared-connection';
-
+	
 global.db = mongoose.createConnection(uri);
 
 var routes = require('./routes')
-
 
 var app = express();
 app.use(express.bodyParser());
 app.use(express.static(__dirname + '/public'));
 //Setters
 app.set('views', __dirname + '/views');
+
+app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
+
 
 app.get('/', routes.home);
 app.get('/insert', routes.insert);
