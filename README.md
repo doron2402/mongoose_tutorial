@@ -2,7 +2,7 @@
 To run:
 
 - Execute `npm install` from this directory
-- Execute `node app.js`
+- Execute `npm start`
 - Navigate to `localhost:8000`
 
 
