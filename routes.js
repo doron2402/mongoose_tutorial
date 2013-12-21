@@ -7,7 +7,6 @@ exports.home = function (req, res, next) {
     if (err) 
     	return next(err);
     
-    console.log(docs)
     res.render('home', {
     	db: docs,
     	helpers: {
@@ -86,40 +85,30 @@ exports.adduser = function(req, res, next){
 }
 
 exports.getId = function(req, res, next) {
-	var id = req.params.id;
+	var id = req.params.id,
+		db;
 
 	model.find(function (err, docs) {
 	    if (err) 
 	    	return next(err);
 	    _.find(docs, function(doc){
-	    	if (doc._id == id){
-	    		console.log('_find');
-	    		res.json(doc);
-	    		return doc;
+	    	
+	    	if (id == doc._id){
+	    		console.log(doc);
+	    		db = doc;
 	    	}
+	    		
+	    		//res.json(doc);
+	    		//return doc;
+	    		
+	    	
 	    });
 	    
-	    res.json(JSON.stringify({
-	    	error: "Couldn't find :("
-		}));
+	    res.render('pages/getid', {
+		   	db: db
+		});
 
-	    /*
-	    _.each(docs, function(key, val){
-			
-		  	if (key._id == id) {
-		    	console.log('Found Id');
-		    	res.json(key);
-		    	return false;
-		  	}
-		  	else 
-		  	{
-		  		res.json(JSON.stringify({
-	    			error: "Couldn't find :("
-				}));
-		  	}
 
-		});  
-		*/ 	
 	 });
 
 }
