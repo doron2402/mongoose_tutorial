@@ -10,7 +10,9 @@ var routes = require('./routes')
 
 var app = express();
 app.use(express.bodyParser());
-
+app.use(express.static(__dirname + '/public'));
+//Setters
+app.set('views', __dirname + '/views');
 
 app.get('/', routes.home);
 app.get('/insert', routes.insert);
