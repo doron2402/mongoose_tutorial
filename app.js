@@ -22,7 +22,7 @@ app.get('/', routes.home);
 app.get('/insert', routes.insert);
 app.get('/name', routes.modelName);
 app.get('/getid/:id', routes.getId);
-app.get('/adduser', routes.adduser);
+app.get('/signup', routes.adduser);
 app.post('/adduser', routes.adduserpost);
 app.get('/login', routes.login);
 app.post('/loginpost', routes.loginpost);

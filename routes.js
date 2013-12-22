@@ -80,8 +80,9 @@ exports.adduserpost = function(req, res, next){
 }
 
 exports.adduser = function(req, res, next){
-	var html = '<form method="POST"><input type="text" name="username" /><input type="password" name="password" /><input type="submit" value="Create" /></form>';
-	res.send(html);
+	res.render('pages/signup', {
+	   	db: db
+	});
 }
 
 exports.getId = function(req, res, next) {
