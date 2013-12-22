@@ -6,18 +6,18 @@ var express = require('express'),
 	
 global.db = mongoose.createConnection(uri);
 
-var routes = require('./routes')
+
 
 var app = express();
-app.use(express.bodyParser());
 app.use(express.static(__dirname + '/public'));
+app.use(express.bodyParser());
 //Setters
 app.set('views', __dirname + '/views');
 
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
-
+var routes = require('./routes')
 app.get('/', routes.home);
 app.get('/insert', routes.insert);
 app.get('/name', routes.modelName);
