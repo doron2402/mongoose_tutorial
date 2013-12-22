@@ -25,6 +25,18 @@ exports.modelName = function (req, res) {
   res.send('my model name is ' + model.modelName);
 }
 
+exports.contact = function(req, res){
+	res.render('pages/contact', {
+	   	db: db
+	});
+}
+
+exports.about = function(req, res){
+	res.render('pages/about', {
+	   	db: db
+	});
+}
+
 exports.insert = function (req, res, next) {
   model.create({ name: 'inserting ' + Date.now() }, function (err, doc) {
     if (err) return next(err);
@@ -113,3 +125,5 @@ exports.getId = function(req, res, next) {
 	 });
 
 }
+
+

@@ -27,6 +27,9 @@ app.post('/adduser', routes.adduserpost);
 app.get('/login', routes.login);
 app.post('/loginpost', routes.loginpost);
 
+app.get('/contact', routes.contact);
+app.get('/about', routes.about);
+
 
 app.listen(8000, function () {
   console.log('listening on http://localhost:8000');
