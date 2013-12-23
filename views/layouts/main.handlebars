@@ -5,7 +5,7 @@
     <link href="/components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/addons.css" rel="stylesheet">
 
-    <title>Mongo DB on Node.js Tutorial</title>
+    <title>{{site.title}}</title>
 
 </head>
 <body>
@@ -18,11 +18,17 @@
 	          <li><a href="/about">About</a></li>
 	          <li><a href="/contact">Contact</a></li>
 	        </ul>
-	        <h3 class="text-muted">Mongo DB on Node.js (Express)</h3>
+	        <h3 class="text-muted">{{site.name}}</h3>
 	      </div>
 	    {{{body}}}
 	    </div>
     </div>
+    <div id="footer">
+      <div class="container">
+        <p class="muted credit">{{site.description}} <a href="{{author.site}}">{{author.name}}</a></p>
+      </div>
+    </div>
+
     <script type="text/javascript" src="/components/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="/js/main.js"></script>
 </body>

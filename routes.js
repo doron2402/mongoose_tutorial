@@ -6,7 +6,6 @@ exports.home = function (req, res, next) {
   model.find(function (err, docs) {
     if (err) 
     	return next(err);
-    
     res.render('home', {
     	db: docs,
     	helpers: {
