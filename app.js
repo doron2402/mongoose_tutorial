@@ -38,8 +38,8 @@ app.get('/getid/:id', routes.getId);
 app.get('/signup', routes.adduser);
 app.post('/adduser', routes.adduserpost);
 app.get('/login', routes.login);
-app.post('/loginpost', routes.loginpost);
-
+app.post('/authenticate', routes.loginpost);
+app.post('/delete/user/:id', routes.deleteUser);
 app.get('/contact', routes.contact);
 app.get('/about', routes.about);
 

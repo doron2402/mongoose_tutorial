@@ -45,9 +45,12 @@ exports.insert = function (req, res, next) {
 
 
 exports.login = function(req, res, next){
-	var html = '<form method="POST" action="/loginpost"><input type="text" name="username" /><input type="password" name="password" /><input type="submit" value="Create" /></form>';
-	res.send(html);
+	res.render('pages/login', {
+	   				
+			});
+	
 }
+
 
 //Login post will authenticate the user
 exports.loginpost = function(req, res, next){
@@ -58,13 +61,11 @@ exports.loginpost = function(req, res, next){
 	model.find(function (err, docs) {
 	    if (err) 
 	    	return next(err);
-	    
+		
 	    _.each(docs, function(key, val){
 			//Check for username and password
 		  	if (key.Username == Username && key.Password == Password) {
-		    	
-		    	console.log('DB Username %s DB Password %s', key.Username, key.Password);
-		  		console.log('Post Username %s Post Password %s', Username, Password);
+		    	//authenticate the user
 		  		res.json(key);
 		  	}
 		  	
@@ -85,14 +86,24 @@ exports.adduserpost = function(req, res, next){
 
 	if (Fullname && Email && Password && Username){
 		
-		model.create({ name: Fullname, createAt: Date.now(), Username: Username, Password: Password, Email: Email  }, function(err, doc){
-			if (err)
-				return next(err);
-			res.render('pages/signup', {
-	   			db: doc,
-	   			userCreated: true
+		//Check if user exsist
+		var users = require('./lib/users.js');
+		if (users.getUsername(Username) === false && users.getUserEmail(Email) === false){
+			console.log('User doesnt exsist its ok to create one.');
+
+			model.create({ name: Fullname, createAt: Date.now(), Username: Username, Password: Password, Email: Email  }, function(err, doc){
+				if (err)
+					return next(err);
+				res.render('pages/signup', {
+		   			db: doc,
+		   			userCreated: true
+				});
 			});
-		});
+		}else{
+			console.log('Error!!!');
+		}
+
+		
 	
 	}
 
@@ -104,6 +115,20 @@ exports.adduser = function(req, res, next){
 	});
 }
 
+exports.deleteUser = function(req, res, next){
+	var id = req.params.id;
+
+	model.find(function (err, docs){
+		_.each(docs, function(key, val){
+			if (key._id == id){
+				//Delete User
+
+			}
+		});
+	});
+
+}
+
 exports.getId = function(req, res, next) {
 	var id = req.params.id,
 		db;
@@ -113,14 +138,8 @@ exports.getId = function(req, res, next) {
 	    	return next(err);
 	    _.find(docs, function(doc){
 	    	
-	    	if (id == doc._id){
-	    		console.log(doc);
+	    	if (id == doc._id)
 	    		db = doc;
-	    	}
-	    		
-	    		//res.json(doc);
-	    		//return doc;
-	    		
 	    	
 	    });
 	    
