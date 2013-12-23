@@ -78,16 +78,24 @@ exports.loginpost = function(req, res, next){
 }
 
 exports.adduserpost = function(req, res, next){
-	var Username = req.body.username
-		,Password = req.body.password;
+	var Username = req.body.user_name
+		,Password = req.body.user_password
+		,Email = req.body.user_email
+		,Fullname = req.body.user_fullname;
 
-	model.create({ name: 'inserting ' + Date.now(), createAt: Date.now(), Username: Username, Password: Password  }, function(err, doc){
-		if (err)
-			return next(err);
-
-		res.send(doc)	
-	});
+	if (Fullname && Email && Password && Username){
+		
+		model.create({ name: Fullname, createAt: Date.now(), Username: Username, Password: Password, Email: Email  }, function(err, doc){
+			if (err)
+				return next(err);
+			res.render('pages/signup', {
+	   			db: doc,
+	   			userCreated: true
+			});
+		});
 	
+	}
+
 }
 
 exports.adduser = function(req, res, next){
