@@ -1,0 +1,11 @@
+{
+  "name": "mongo_tutorial",
+  "version": "0.0.1",
+  "ignore": [
+    "node_modules"
+  ],
+  "dependencies": {
+    "jquery": "1.10.2",
+    "bootstrap": "3.0.3"
+  }
+}
