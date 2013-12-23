@@ -30,6 +30,14 @@ $('ul#nav-header > li > a').each(function(key,val){
 $(document).ready(function(){
 	$('a.ajaxPostLink').click(function(e){
 		e.preventDefault();
-		console.log(e);
-	})
+		//Ajax call
+		$.post($(e.target).attr('href'), function( data ) {
+			console.log( data );
+			if (data.response == 'ok'){
+				$('.panel-title').html('Deleted id: ' + data.id + ' Succesfully!');
+				$('.panel-body').html('<a href="/">Back</a>');
+			}
+		});
+	});
+
 });

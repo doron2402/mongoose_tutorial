@@ -117,15 +117,14 @@ exports.adduser = function(req, res, next){
 
 exports.deleteUser = function(req, res, next){
 	var id = req.params.id;
-
-	model.find(function (err, docs){
-		_.each(docs, function(key, val){
-			if (key._id == id){
-				//Delete User
-
-			}
-		});
-	});
+	
+	model.findByIdAndRemove(id, function(err, args){
+		if (err)
+			return err;
+		console.log(args);
+		
+		res.json({response: 'ok', id: args._id});
+	})
 
 }
 
