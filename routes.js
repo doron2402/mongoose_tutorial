@@ -88,18 +88,45 @@ exports.adduserpost = function(req, res, next){
 		
 		//Check if user exsist
 		var users = require('./lib/users.js');
-		if (users.getUsername(Username) === false || users.getUserEmail(Email) === false){
-			console.log('User doesnt exsist its ok to create one.');
+		//Search for user name
+		model.findOne({ Username: Username }, function (err, doc) {
+			if (err)
+				return err;
+			if (doc){
+				if (doc.Email == Email)
+					userAlreadyExsist();
+				else
+					userAlreadyExsist();
+				
+			}
+			else{
+				model.findOne({ Email: Email }, function (err, doc) {
+					if (err)	
+						return err;
+					if (!doc)
+						createUser();
+					else
+						userAlreadyExsist();
+				});
+			}
+				
+		});
 
+
+		function createUser(){
 			model.create({ name: Fullname, createAt: Date.now(), Username: Username, Password: Password, Email: Email  }, function(err, doc){
 				if (err)
 					return next(err);
 				res.render('pages/signup', {
 		   			db: doc,
-		   			userCreated: true
+		   			userCreated: true,
+		   			response: 'User Created!'
 				});
 			});
-		}else{
+		}
+
+		function userAlreadyExsist(){
+			console.log('already in use');
 			res.render('pages/signup', {
 		   		userCreated: false,
 		   		error: 'user exsist use different email and username'
@@ -107,10 +134,12 @@ exports.adduserpost = function(req, res, next){
 			});
 		}
 
-		
-	
+	}else{
+		res.render('pages/signup', {
+		   		userCreated: false,
+		   		error: 'Please fill all the fields'
+			});
 	}
-
 }
 
 exports.adduser = function(req, res, next){
