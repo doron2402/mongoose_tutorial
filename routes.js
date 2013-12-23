@@ -88,7 +88,7 @@ exports.adduserpost = function(req, res, next){
 		
 		//Check if user exsist
 		var users = require('./lib/users.js');
-		if (users.getUsername(Username) === false && users.getUserEmail(Email) === false){
+		if (users.getUsername(Username) === false || users.getUserEmail(Email) === false){
 			console.log('User doesnt exsist its ok to create one.');
 
 			model.create({ name: Fullname, createAt: Date.now(), Username: Username, Password: Password, Email: Email  }, function(err, doc){
@@ -100,7 +100,11 @@ exports.adduserpost = function(req, res, next){
 				});
 			});
 		}else{
-			console.log('Error!!!');
+			res.render('pages/signup', {
+		   		userCreated: false,
+		   		error: 'user exsist use different email and username'
+
+			});
 		}
 
 		
