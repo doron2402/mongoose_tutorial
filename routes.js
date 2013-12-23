@@ -82,57 +82,12 @@ exports.adduserpost = function(req, res, next){
 	var Username = req.body.user_name
 		,Password = req.body.user_password
 		,Email = req.body.user_email
-		,Fullname = req.body.user_fullname;
+		,Fullname = req.body.user_fullname
+		,users = require('./lib/users.js');
 
 	if (Fullname && Email && Password && Username){
-		
-		//Check if user exsist
-		var users = require('./lib/users.js');
-		//Search for user name
-		model.findOne({ Username: Username }, function (err, doc) {
-			if (err)
-				return err;
-			if (doc){
-				if (doc.Email == Email)
-					userAlreadyExsist();
-				else
-					userAlreadyExsist();
-				
-			}
-			else{
-				model.findOne({ Email: Email }, function (err, doc) {
-					if (err)	
-						return err;
-					if (!doc)
-						createUser();
-					else
-						userAlreadyExsist();
-				});
-			}
-				
-		});
 
-
-		function createUser(){
-			model.create({ name: Fullname, createAt: Date.now(), Username: Username, Password: Password, Email: Email  }, function(err, doc){
-				if (err)
-					return next(err);
-				res.render('pages/signup', {
-		   			db: doc,
-		   			userCreated: true,
-		   			response: 'User Created!'
-				});
-			});
-		}
-
-		function userAlreadyExsist(){
-			console.log('already in use');
-			res.render('pages/signup', {
-		   		userCreated: false,
-		   		error: 'user exsist use different email and username'
-
-			});
-		}
+    	users.addUser(req, res, next);
 
 	}else{
 		res.render('pages/signup', {
