@@ -1,3 +1,58 @@
+<div class="jumbotron">
+  <h1>Signup</h1>
+  <p>
+  	<a id="signup-teacher-btn" class="btn btn-primary btn-lg" role="button">Signup as a Teacher</a>
+  	<a id="signup-student-btn" class="btn btn-primary btn-lg" role="button">Signup as a Student</a>
+  </p>
+</div>
+<div id="Teacher-Signup" style="display:none;">
+<form class="form-horizontal" id="registerHere" method='post' action='/addteacher'>
+<fieldset class="spacer3">
+		<legend>Signup as a teacher</legend>
+		{{#if error}}
+		<div class="alert alert-danger">
+			{{error}}
+		</div>
+		{{/if}}
+		<div class="control-group">
+			<label class="control-label">Name</label>
+			<div class="controls">
+				<input type="text" class="input-xlarge" id="user_fullname" name="user_fullname" rel="popover" data-content="Enter your first and last name." data-original-title="Full Name">
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label class="control-label">Email</label>
+			<div class="controls">
+				<input type="text" class="input-xlarge" id="user_email" name="user_email" rel="popover" data-content="What’s your email address?" data-original-title="Email">
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label class="control-label">Username</label>
+			<div class="controls">
+				<input type="text" data-validate="Username must be at least 6 characters" class="input-xlarge" id="user_name" name="user_name" rel="popover" data-content="user name must be at least 4 chars" data-original-title="Username">
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label class="control-label">Password</label>
+			<div class="controls">
+				<input type="password" class="input-xlarge" id="user_password" name="user_password" rel="popover" data-content="Password must be 6 charachters" data-original-title="Password">
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label class="control-label"></label>
+			<div class="controls">
+				<button type="submit" id="form-submit-btn" class="btn btn-success" >Create My Account</button>
+			</div>
+		</div>
+	</fieldset>
+</form>
+
+</div>
+<div id="Student-Signup" style="display:none;">
 {{#if userCreated}}
 <div class="alert alert-success">
 	<h4>{{response}}, {{db.name}}.</h4>
@@ -6,7 +61,7 @@
 {{else}}
 <form class="form-horizontal" id="registerHere" method='post' action='/adduser'>
 	<fieldset class="spacer3">
-		<legend>Registration</legend>
+		<legend>Signup as a Student</legend>
 		{{#if error}}
 		<div class="alert alert-danger">
 			{{error}}
@@ -49,3 +104,19 @@
 	</fieldset>
 </form>
 {{/if}}
+</div>
+<script>
+window.onload=function(){
+	
+	$('#signup-student-btn').click(function(e){
+		e.preventDefault();
+		$('#Teacher-Signup').hide();
+		$('#Student-Signup').show();
+	});
+	$('#signup-teacher-btn').click(function(e){
+		e.preventDefault();
+		$('#Student-Signup').hide();
+		$('#Teacher-Signup').show();
+	});
+}
+</script>
