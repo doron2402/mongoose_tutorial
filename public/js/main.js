@@ -25,3 +25,11 @@ $('ul#nav-header > li > a').each(function(key,val){
 	}
 
 });
+
+
+$(document).ready(function(){
+	$('a.ajaxPostLink').click(function(e){
+		e.preventDefault();
+		console.log(e);
+	})
+});
